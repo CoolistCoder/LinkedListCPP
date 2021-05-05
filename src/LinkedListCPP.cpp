@@ -23,10 +23,17 @@ int main() {
 	cout << "The length of the list is: " << mainList.length() << endl;
 	cout << "The position at 0 is " << mainList.get(0) << endl;
 	cout << "The position at 5 is " << mainList.get(5) << endl;
-	cout << "The position at 500 is " << mainList.get(500) << endl;
+	cout << "The position at length is " << mainList.get(mainList.length()) << endl;
 
 	//now remove some data and print out the list
+	cout << "Removing data at 5" << endl;
 	mainList.pop(5);
+	mainList.print();
+	cout << "Removing data at 0" << endl;
+	mainList.pop(0);
+	mainList.print();
+	cout << "Removing data at length" << endl;
+	mainList.pop(mainList.length());
 	mainList.print();
 
 	//now clear out the list entirely and print that out

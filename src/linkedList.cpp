@@ -56,8 +56,8 @@ unsigned int linkedList::length(){
 }
 
 int linkedList::get(unsigned int _at){
-	if (_at > this->length()){	//first, determine if the index we want is greater than the string length
-		std::cout << "The index is higher than the length of the string" << std::endl;
+	if (_at >= this->length()){	//first, determine if the index we want is greater than the string length
+		std::cout << "Index out of range" << std::endl;
 		return -1; //-1 is a failure state
 	}
 	else{
@@ -76,8 +76,8 @@ int linkedList::get(unsigned int _at){
 }
 
 void linkedList::pop(unsigned int _at){
-	if (_at > this->length()){	//first, determine if the index we want is greater than the string length
-		std::cout << "The index is higher than the length of the string" << std::endl;
+	if (_at >= this->length()){	//first, determine if the index we want is greater than the string length
+		std::cout << "The index is out of range" << std::endl;
 		return;	//just quit out if our length is less than where we need the data
 	}
 	else{
@@ -86,14 +86,22 @@ void linkedList::pop(unsigned int _at){
 			return;	//an empty head yields no data
 		}
 		else{
-			node* temp = this->head;	//use the temp once more as an iterator
-			node* prev = temp;			//use previous to keep track of the previous node
-			for (unsigned int i=0; i<_at; i++){	//use i as a limiter to stop the iteration where we need it
-				prev = temp;
-				temp = temp->next;
+			if (_at == 0){	//if we're going to be popping the head...
+				node* temp = this->head; //use the temp once more as an iterator
+				temp = this->head->next; //make temp into the head's next node
+				delete this->head;		//remove the head
+				this->head = temp;		//set the head to temp, which was the head's next node
 			}
-			prev->next = temp->next;	//take the last node and set it to the node after the next node
-			delete temp;				//then delete the current node
+			else{
+				node* temp = this->head;	//use the temp once more as an iterator
+				node* prev = temp;			//use previous to keep track of the previous node
+				for (unsigned int i=0; i<_at; i++){	//use i as a limiter to stop the iteration where we need it
+					prev = temp;
+					temp = temp->next;
+				}
+				prev->next = temp->next;	//take the last node and set it to the node after the next node
+				delete temp;				//then delete the current node
+			}
 		}
 	}
 }
