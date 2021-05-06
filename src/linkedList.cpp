@@ -56,7 +56,7 @@ unsigned int linkedList::length(){
 }
 
 int linkedList::get(unsigned int _at){
-	if (_at >= this->length()){	//first, determine if the index we want is greater than the string length
+	if (_at >= this->length()){	//first, determine if the index we want is greater than the list length
 		std::cout << "Index out of range" << std::endl;
 		return -1; //-1 is a failure state
 	}
@@ -74,6 +74,28 @@ int linkedList::get(unsigned int _at){
 		}
 	}
 }
+
+void linkedList::set(unsigned int _at, int newdata){
+	if (_at >= this->length()){	//first, determine if the index we want is greater than the list length
+		std::cout << "Index out of range" << std::endl;
+		return; //returns prematurely
+	}
+	else{
+		if (!this->head){		//if the head is empty, just print a message
+			std::cout << "The head is empty" << std::endl;
+			return; //also returns prematurely
+		}
+		else{
+			node* temp = this->head;	//use the temp once more as an iterator
+			for (unsigned int i=0; i<_at; i++){	//use i as a limiter to stop the iteration where we need it
+				temp = temp->next;
+			}
+			temp->data = newdata; //set the data within the node equal to the newdata parameter
+			return;
+		}
+	}
+}
+
 
 void linkedList::pop(unsigned int _at){
 	if (_at >= this->length()){	//first, determine if the index we want is greater than the string length
@@ -120,6 +142,32 @@ void linkedList::clear(){
 			this->head = temp;		//the head becomes temp, which is currently the next node from the now deleted head
 		}
 		this->print();
+	}
+}
+
+void linkedList::swap(unsigned int src, unsigned int dest){
+	if (src >= this->length()){	//if the first element is out of range, output an error
+		std::cout << "Index out of range" << std::endl;
+		return;
+	}
+	if (dest >= this->length()){//if the second element is out of range, output an error
+		std::cout << "Index out of range" << std::endl;
+		return;
+	}
+	if (src >= dest){//if the first element is further out than the second element
+		std::cout << "src index invalid" << std::endl;
+		return;
+	}
+	//perform a basic swap between the src and dest values
+	int swapval = this->get(src);
+	this->set(src, this->get(dest));
+	this->set(dest, swapval);
+}
+
+void linkedList::reverse(){
+	//iterate through half the list, then swap from first and second until both ends meet at the center
+	for (unsigned int i=0; i<(this->length())/2; i++){
+		this->swap(i, this->length()-1-i); //perform a swap with just the data only
 	}
 }
 
